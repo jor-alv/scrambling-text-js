@@ -45,7 +45,16 @@ describe('Scrambler', () => {
     const defaultCharacters = Scrambler.CHARACTERS.DEFAULT;
     defaultCharacters.includes('*', '@');
 
+    const digitCharacters = Scrambler.CHARACTERS.DIGITS;
+    digitCharacters.includes('0', '1', '2', '3', '4');
+
     const alphabetCharacters = Scrambler.CHARACTERS.ALPHABET;
     alphabetCharacters.includes('a', 'b', 'c', 'd', 'e');
+
+    const alphabetUpperCaseCharacters = Scrambler.CHARACTERS.ALPHABET_WITH_CAPITALS;
+    alphabetUpperCaseCharacters.includes('A', 'B', 'C', 'a', 'b', 'c');
+
+    const combinedCharacters = Scrambler.CHARACTERS.DIGITS_AND_ALPHABET_WITH_CAPITALS;
+    combinedCharacters.includes('0', '1', '2', 'A', 'B', 'C', 'a', 'b', 'c');
   });
 });
