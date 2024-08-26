@@ -41,10 +41,6 @@ export default class Scrambler {
     this.encodingCounters = this._generateCounters(this.scrambledText);
     this.decodingCounters = this._generateCounters(this.targetText);
     this.onScramble = onScramble;
-
-    this.frameId = null;
-    this.frameIndex = 0;
-
     this.frameId = requestAnimationFrame(() => this._encode());
   }
 
