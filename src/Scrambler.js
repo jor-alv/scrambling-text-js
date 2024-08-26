@@ -1,4 +1,10 @@
 export default class Scrambler {
+  static get DELAY() {
+    return 3;
+  }
+  static get MAX_COUNTER() {
+    return 12;
+  }
   static get CHARACTERS() {
     return {
       DIGITS: ['0','1','2','3','4','5','6','7','8','9'],
@@ -11,8 +17,9 @@ export default class Scrambler {
   }
 
   constructor() {
-    this.characters = [...Scrambler.CHARACTERS.DEFAULT];
-    this.maxCounter = 12;
+    this.delay = Scrambler.DELAY;
+    this.maxCounter = Scrambler.MAX_COUNTER;
+    this.characters = Scrambler.CHARACTERS.DEFAULT;
 
     this.targetText = '';
     this.scrambledText = '';
@@ -24,11 +31,11 @@ export default class Scrambler {
     this.frameIndex = 0;
   }
 
-  scramble(text, onScramble, option = null) {
-    if (option?.characters) {
-      this.characters = [...option.characters];
-    } else {
-      this.characters = [...Scrambler.CHARACTERS.DEFAULT];
+  scramble(text, onScramble, options = null) {
+    if (options) {
+      if (options.delay) this.delay = options.delay;
+      if (options.maxCounter) this.maxCounter = options.maxCounter;
+      if (options.characters) this.characters = options.characters;
     }
     this.targetText = text;
     this.encodingCounters = this._generateCounters(this.scrambledText);
@@ -77,7 +84,7 @@ export default class Scrambler {
       }
     }
 
-    this.frameIndex = (this.frameIndex + 1) % 3;
+    this.frameIndex = (this.frameIndex + 1) % this.delay;
     this.frameId = requestAnimationFrame(() => this._encode());
   }
 
@@ -94,7 +101,7 @@ export default class Scrambler {
       this.onScramble(this.scrambledText);
     }
 
-    this.frameIndex = (this.frameIndex + 1) % 2;
+    this.frameIndex = (this.frameIndex + 1) % this.delay;
     this.frameId = requestAnimationFrame(() => this._fill());
   }
 
@@ -121,7 +128,7 @@ export default class Scrambler {
       this.onScramble(this.scrambledText);
     }
 
-    this.frameIndex = (this.frameIndex + 1) % 4;
+    this.frameIndex = (this.frameIndex + 1) % this.delay;
     this.frameId = requestAnimationFrame(() => this._decode());
   }
 }
